@@ -23,6 +23,7 @@ public class TodoController {
     // 1. 전체 목록 조회
     @GetMapping("/list")
     public List<TodoDTO> list() {
+    	// 디플로이 테스트
         return todoService.getTodoList();
     }
 
