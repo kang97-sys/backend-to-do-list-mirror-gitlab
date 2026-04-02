@@ -3,8 +3,10 @@ package com.kdh.todo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,16 +14,27 @@ import com.kdh.todo.dto.TodoDTO;
 import com.kdh.todo.service.TodoService;
 
 @RestController
-@RequestMapping("/api/todo") // 모든 요청 주소 앞에 /api/todo가 붙습니다.
-@CrossOrigin(origins = "*") // 프론트엔드가 어디에 있든 일단 허용
+@RequestMapping("/api/todo")
 public class TodoController {
 
     @Autowired
     private TodoService todoService;
 
-    // 전체 할 일 목록 조회 (http://localhost:8080/api/todo/list)
+    // 1. 전체 목록 조회
     @GetMapping("/list")
-    public List<TodoDTO> getTodoList() {
+    public List<TodoDTO> list() {
         return todoService.getTodoList();
+    }
+
+    // 2. 목표 등록
+    @PostMapping("/add")
+    public int add(@RequestBody TodoDTO todo) {
+        return todoService.addTodo(todo);
+    }
+
+    // 3. 성과 기록
+    @PutMapping("/complete")
+    public int complete(@RequestBody TodoDTO todo) {
+        return todoService.modifyTodoComplete(todo);
     }
 }

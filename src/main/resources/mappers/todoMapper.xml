@@ -1,36 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.kdh.todo.mapper.TodoMapper">
 
     <select id="selectTodoList" resultType="com.kdh.todo.dto.TodoDTO">
-        SELECT ID
-        	 , TITLE
-        	 , CONTENT
-        	 , REMARKS
-        	 , COMPLETED
-        	 , TO_CHAR(REG_DATE, 'YYYY-MM-DD') AS REGDATE
-        FROM TODO
-        ORDER BY ID DESC
+        SELECT GOAL_SEQ
+             , USER_ID
+             , GOAL_DATE
+             , TITLE
+             , CONTENT
+             , ACHIEVE_RATE
+             , STATUS_YN
+             , INSERT_ID
+             , INSERT_DTS
+             , UPDATE_ID
+             , UPDATE_DTS
+        FROM GOAL_LIST
+        ORDER BY GOAL_DATE DESC, GOAL_SEQ DESC
     </select>
 
     <insert id="insertTodo" parameterType="com.kdh.todo.dto.TodoDTO">
-        INSERT INTO TODO (
-        	  TITLE
-        	, CONTENT
-       	) 
+        INSERT INTO GOAL_LIST (
+              USER_ID
+            , GOAL_DATE
+            , TITLE
+            , CONTENT
+            , ACHIEVE_RATE
+            , STATUS_YN
+            , INSERT_ID
+        ) 
         VALUES (
-        	  #{title}
-        	, #{content}
-       	)
+              #{userId}
+            , #{goalDate}
+            , #{title}
+            , #{content}
+            , 0
+            , 'N'
+            , #{insertId}
+        )
     </insert>
 
     <update id="updateTodoComplete" parameterType="com.kdh.todo.dto.TodoDTO">
-        UPDATE TODO
-        SET   REMARKS = #{remarks}
-        	, COMPLETED = 'Y'
-        WHERE ID = #{id}
+        UPDATE GOAL_LIST
+        SET   CONTENT      = #{content}
+            , ACHIEVE_RATE = #{achieveRate}
+            , STATUS_YN    = 'Y'
+            , UPDATE_ID    = #{updateId}
+            , UPDATE_DTS   = SYSTIMESTAMP
+        WHERE GOAL_SEQ     = #{goalSeq}
     </update>
 
 </mapper>
