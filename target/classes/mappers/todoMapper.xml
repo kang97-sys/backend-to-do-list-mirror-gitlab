@@ -47,7 +47,7 @@
             , ACHIEVE_RATE = #{achieveRate}
             , STATUS_YN    = 'Y'
             , UPDATE_ID    = #{updateId}
-            , UPDATE_DTS   = SYSTIMESTAMP
+            , UPDATE_DTS   = NOW()
         WHERE GOAL_SEQ     = #{goalSeq}
     </update>
 
