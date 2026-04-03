@@ -32,7 +32,7 @@
         ) 
         VALUES (
               #{userId}
-            , #{goalDate, jdbcType=DATE}
+            , #{goalDate}::DATE  
             , #{title}
             , #{content}
             , 0
